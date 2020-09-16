@@ -1,0 +1,15 @@
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.DAL.deps.json
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.DAL.dll
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.DAL.pdb
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.Models.dll
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.Models.pdb
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.csprojAssemblyReference.cache
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.AssemblyInfoInputs.cache
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.AssemblyInfo.cs
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.csproj.CoreCompileInputs.cache
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.csproj.CopyComplete
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.dll
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.pdb
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.DAL.runtimeconfig.json
+D:\C#\ShopApi\ShopApi.DAL\bin\Debug\netcoreapp3.1\ShopApi.DAL.runtimeconfig.dev.json
+D:\C#\ShopApi\ShopApi.DAL\obj\Debug\netcoreapp3.1\ShopApi.DAL.genruntimeconfig.cache

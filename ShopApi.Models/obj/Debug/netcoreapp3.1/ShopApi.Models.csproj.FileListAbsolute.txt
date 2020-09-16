@@ -1,0 +1,9 @@
+D:\C#\ShopApi\ShopApi.Models\bin\Debug\netcoreapp3.1\ShopApi.Models.deps.json
+D:\C#\ShopApi\ShopApi.Models\bin\Debug\netcoreapp3.1\ShopApi.Models.dll
+D:\C#\ShopApi\ShopApi.Models\bin\Debug\netcoreapp3.1\ShopApi.Models.pdb
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.csprojAssemblyReference.cache
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.AssemblyInfoInputs.cache
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.AssemblyInfo.cs
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.csproj.CoreCompileInputs.cache
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.dll
+D:\C#\ShopApi\ShopApi.Models\obj\Debug\netcoreapp3.1\ShopApi.Models.pdb
