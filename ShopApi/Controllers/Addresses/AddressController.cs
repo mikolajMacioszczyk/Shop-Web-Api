@@ -28,8 +28,8 @@ namespace ShopApi.Controllers.Addresses
             return Ok(_mapper.Map<IEnumerable<AddressReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<AddressReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AddressReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -40,14 +40,15 @@ namespace ShopApi.Controllers.Addresses
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<AddressReadDto>> CreateAsync(int id,[FromBody] AddressCreateDto addressCreateDto)
+        public async Task<ActionResult<AddressReadDto>> CreateAsync([FromRoute]int id,[FromBody] AddressCreateDto addressCreateDto)
         {
             var model = _mapper.Map<Address>(addressCreateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
                 var addressReadDto = _mapper.Map<AddressReadDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), addressReadDto);
+                addressReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), addressReadDto);
             }
             return BadRequest();
         }

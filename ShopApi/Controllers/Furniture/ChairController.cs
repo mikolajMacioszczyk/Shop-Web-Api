@@ -27,8 +27,8 @@ namespace ShopApi.Controllers.Furniture
             return Ok(_mapper.Map<IEnumerable<ChairReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<ChairReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ChairReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -39,15 +39,16 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<ChairReadDto>> UpdateAsync(int id,[FromBody] ChairCreateDto chairCreateDto)
+        public async Task<ActionResult<ChairReadDto>> UpdateAsync([FromRoute]int id,[FromBody] ChairCreateDto chairCreateDto)
         {
             Chair model = _mapper.Map<Chair>(chairCreateDto);
 
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var collectionReadDto = _mapper.Map<ChairReadDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), collectionReadDto);
+                var chairReadDto = _mapper.Map<ChairReadDto>(await _repository.GetByIdAsync(id));
+                chairReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), chairReadDto);
             }
             return BadRequest("Invalid Chair Id");
         }

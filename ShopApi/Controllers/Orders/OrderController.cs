@@ -27,8 +27,8 @@ namespace ShopApi.Controllers.Orders
             return Ok(_mapper.Map<IEnumerable<OrderReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -39,7 +39,7 @@ namespace ShopApi.Controllers.Orders
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<OrderCreateDto>> UpdateAsync(int id,[FromBody] OrderCreateDto orderCreateDto)
+        public async Task<ActionResult<OrderCreateDto>> UpdateAsync([FromRoute]int id,[FromBody] OrderCreateDto orderCreateDto)
         {
             Order model = _mapper.Map<Order>(orderCreateDto);
 
@@ -47,7 +47,8 @@ namespace ShopApi.Controllers.Orders
             {
                 await _repository.SaveChangesAsync();
                 var orderReadDto = _mapper.Map<OrderReadDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), orderReadDto);
+                orderReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), orderReadDto);
             }
             return BadRequest("Invalid Table Id");
         }

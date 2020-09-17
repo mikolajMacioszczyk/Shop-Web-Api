@@ -27,8 +27,8 @@ namespace ShopApi.Controllers.People
             return Ok(_mapper.Map<IEnumerable<EmployeeReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<EmployeeReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EmployeeReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -47,7 +47,7 @@ namespace ShopApi.Controllers.People
                 await _repository.SaveChangesAsync();
                 var employeeReadDto = _mapper.Map<EmployeeReadDto>(model);
                 employeeReadDto.Id = id;
-                return Created(nameof(GetByIdAsync), employeeReadDto);
+                return Accepted(nameof(GetByIdAsync), employeeReadDto);
             }
             return BadRequest("Invalid employee id");
         }

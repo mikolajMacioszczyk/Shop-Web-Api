@@ -26,8 +26,8 @@ namespace ShopApi.Controllers.Collection
             return Ok(_mapper.Map<IEnumerable<CollectionReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}", Name = "GetByIdAsync")]
-        public async Task<ActionResult<CollectionReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CollectionReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -38,14 +38,15 @@ namespace ShopApi.Controllers.Collection
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CollectionReadDto>> CreateAsync(int id,[FromBody] CollectionCreateDto collectionCreateDto)
+        public async Task<ActionResult<CollectionReadDto>> CreateAsync([FromRoute]int id,[FromBody] CollectionCreateDto collectionCreateDto)
         {
             var model = _mapper.Map<Models.Furnitures.Collection>(collectionCreateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
                 var collectionReadDto = _mapper.Map<CollectionReadDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), collectionReadDto);
+                collectionReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), collectionReadDto);
             }
             return BadRequest();
         }

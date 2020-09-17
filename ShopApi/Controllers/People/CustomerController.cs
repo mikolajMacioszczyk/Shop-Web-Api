@@ -33,8 +33,8 @@ namespace ShopApi.Controllers.People
             return Ok(_mapper.Map<IEnumerable<CustomerReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<CustomerReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -45,7 +45,7 @@ namespace ShopApi.Controllers.People
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CustomerReadDto>> UpdateAsync(int id,[FromBody] CustomerCreateDto customerCreateDto)
+        public async Task<ActionResult<CustomerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CustomerCreateDto customerCreateDto)
         {
             var model = _mapper.Map<Customer>(customerCreateDto);
             if (await _repository.UpdateAsync(id, model))
@@ -53,7 +53,7 @@ namespace ShopApi.Controllers.People
                 await _repository.SaveChangesAsync();
                 var customerReadDto = _mapper.Map<CustomerReadDto>(model);
                 customerReadDto.Id = id;
-                return Created(nameof(GetByIdAsync), customerReadDto);
+                return Accepted(nameof(GetByIdAsync), customerReadDto);
             }
             return BadRequest("Invalid customer id");
         }

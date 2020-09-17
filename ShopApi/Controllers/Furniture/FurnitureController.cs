@@ -26,8 +26,8 @@ namespace ShopApi.Controllers.Furniture
             return Ok(_mapper.Map<IEnumerable<FurnitureReadDto>>(await _furnitureRepository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<FurnitureReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FurnitureReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _furnitureRepository.GetByIdAsync(id);
             if (model == null)

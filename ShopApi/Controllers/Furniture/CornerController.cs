@@ -29,8 +29,8 @@ namespace ShopApi.Controllers.Furniture
             return Ok(_mapper.Map<IEnumerable<CornerReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<CornerReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CornerReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -41,14 +41,15 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CornerReadDto>> UpdateAsync(int id,[FromBody] CornerCreateDto cornerCreateDto)
+        public async Task<ActionResult<CornerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CornerCreateDto cornerCreateDto)
         {
             Corner model = _mapper.Map<Corner>(cornerCreateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var collectionReadDto = _mapper.Map<CornerCreateDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), collectionReadDto);
+                var cornerReadDto = _mapper.Map<CornerReadDto>(await _repository.GetByIdAsync(id));
+                cornerReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), cornerReadDto);
             }
             return BadRequest("Invalid Corner Id");
         }

@@ -27,8 +27,8 @@ namespace ShopApi.Controllers.Furniture
             return Ok(_mapper.Map<IEnumerable<SofaReadDto>>(await _repository.GetAllAsync()));
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<SofaReadDto>> GetByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SofaReadDto>> GetByIdAsync([FromRoute]int id)
         {
             var model = await _repository.GetByIdAsync(id);
             if (model == null)
@@ -39,14 +39,15 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<SofaReadDto>> UpdateAsync(int id,[FromBody] SofaCreateDto sofaCreateDto)
+        public async Task<ActionResult<SofaReadDto>> UpdateAsync([FromRoute]int id,[FromBody] SofaCreateDto sofaCreateDto)
         {
             Sofa model = _mapper.Map<Sofa>(sofaCreateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var collectionReadDto = _mapper.Map<SofaReadDto>(await _repository.GetByIdAsync(id));
-                return Created(nameof(GetByIdAsync), collectionReadDto);
+                var sofaReadDto = _mapper.Map<SofaReadDto>(await _repository.GetByIdAsync(id));
+                sofaReadDto.Id = id;
+                return Accepted(nameof(GetByIdAsync), sofaReadDto);
             }
             return BadRequest("Invalid Sofa Id");
         }

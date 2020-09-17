@@ -34,7 +34,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/customer/:id",
                             Description = "Return customer with taken id or NotFound"
                         },
@@ -55,7 +55,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/employee/:id",
                             Description = "Return employee with taken id or NotFound"
                         },
@@ -77,7 +77,7 @@ namespace ShopApi.Controllers.Home
                     },
                     new NavigationHelper()
                     {
-                        Method = Method.POST.ToString(),
+                        Method = Method.GET.ToString(),
                         Path = "api/address/:id",
                         Description = "Return address with taken id or NotFound"
                     },
@@ -98,7 +98,7 @@ namespace ShopApi.Controllers.Home
                     },
                     new NavigationHelper()
                     {
-                        Method = Method.POST.ToString(),
+                        Method = Method.GET.ToString(),
                         Path = "api/order/:id",
                         Description = "Return order with taken id or NotFound"
                     },
@@ -121,7 +121,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/furniture/:id",
                             Description = "Return furniture with taken id or NotFound"
                         },
@@ -142,7 +142,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/chair/:id",
                             Description = "Return chair with taken id or NotFound"
                         },
@@ -163,7 +163,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/corner/:id",
                             Description = "Return corner with taken id or NotFound"
                         },
@@ -184,7 +184,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/sofa/:id",
                             Description = "Return sofa with taken id or NotFound"
                         },
@@ -205,7 +205,7 @@ namespace ShopApi.Controllers.Home
                         },
                         new NavigationHelper()
                         {
-                            Method = Method.POST.ToString(),
+                            Method = Method.GET.ToString(),
                             Path = "api/table/:id",
                             Description = "Return table with taken id or NotFound"
                         },
@@ -227,7 +227,7 @@ namespace ShopApi.Controllers.Home
                     },
                     new NavigationHelper()
                     {
-                        Method = Method.POST.ToString(),
+                        Method = Method.GET.ToString(),
                         Path = "api/collection/:id",
                         Description = "Return collection with taken id or NotFound"
                     },
