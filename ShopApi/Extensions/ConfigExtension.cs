@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ShopApi.DAL.Repositories.Address;
 using ShopApi.DAL.Repositories.Collection;
 using ShopApi.DAL.Repositories.Furniture.Base;

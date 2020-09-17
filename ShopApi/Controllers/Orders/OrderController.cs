@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Orders;
-using ShopApi.Models.Dtos.Orders;
 using ShopApi.Models.Dtos.Orders.OrderDtos;
 using ShopApi.Models.Orders;
 
@@ -47,11 +46,24 @@ namespace ShopApi.Controllers.Orders
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var orderReadDto = _mapper.Map<OrderReadDto>(await _repository.GetByIdAsync(id));
+                var orderReadDto = _mapper.Map<OrderReadDto>(model);
                 orderReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), orderReadDto);
             }
             return BadRequest("Invalid Table Id");
+        }
+        
+        [HttpPost("create")]
+        public async Task<ActionResult<OrderReadDto>> CreateAsync([FromBody] OrderCreateDto orderCreateDto)
+        {
+            var model = _mapper.Map<Order>(orderCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var orderReadDto = _mapper.Map<OrderReadDto>(model);
+                return Created(nameof(CreateAsync), orderReadDto);
+            }
+            return BadRequest("Error when try to create order in database");
         }
     }
 }

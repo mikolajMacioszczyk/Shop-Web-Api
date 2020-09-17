@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.People.Emplyee;
-using ShopApi.Models.Dtos.People.Customer;
 using ShopApi.Models.Dtos.People.Employee;
 using ShopApi.Models.People;
 
@@ -51,6 +50,19 @@ namespace ShopApi.Controllers.People
                 return Accepted(nameof(GetByIdAsync), employeeReadDto);
             }
             return BadRequest("Invalid employee id");
+        }
+        
+        [HttpPost("create")]
+        public async Task<ActionResult<EmployeeReadDto>> CreateAsync([FromBody] EmployeeCreateDto employeeCreateDto)
+        {
+            var model = _mapper.Map<Employee>(employeeCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var employeeReadDto = _mapper.Map<EmployeeReadDto>(model);
+                return Created(nameof(CreateAsync), employeeReadDto);
+            }
+            return BadRequest("Error when try to create employee in database");
         }
     }
 }

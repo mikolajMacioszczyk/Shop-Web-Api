@@ -2,7 +2,6 @@
 using System.Linq;
 using AutoMapper;
 using ShopApi.DAL;
-using ShopApi.Models.Furnitures;
 using ShopApi.Models.Orders;
 
 namespace ShopApi.Profiles.Converters.EnumerbleIdToEnumerableOrder

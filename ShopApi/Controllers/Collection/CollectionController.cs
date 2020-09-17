@@ -38,17 +38,30 @@ namespace ShopApi.Controllers.Collection
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CollectionReadDto>> CreateAsync([FromRoute]int id,[FromBody] CollectionUpdateDto collectionUpdateDto)
+        public async Task<ActionResult<CollectionReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CollectionUpdateDto collectionUpdateDto)
         {
             var model = _mapper.Map<Models.Furnitures.Collection>(collectionUpdateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var collectionReadDto = _mapper.Map<CollectionReadDto>(await _repository.GetByIdAsync(id));
+                var collectionReadDto = _mapper.Map<CollectionReadDto>(model);
                 collectionReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), collectionReadDto);
             }
             return BadRequest();
+        }
+
+        [HttpPost("create")]
+        public async Task<ActionResult<CollectionReadDto>> CreateAsync([FromBody] CollectionCreateDto collectionCreateDto)
+        {
+            var model = _mapper.Map<Models.Furnitures.Collection>(collectionCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var collectionReadDto = _mapper.Map<CollectionReadDto>(model);
+                return Created(nameof(CreateAsync), collectionReadDto);
+            }
+            return BadRequest("Error when try to create collection in database");
         }
     }
 }

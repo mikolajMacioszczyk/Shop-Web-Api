@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Address;
-using ShopApi.Models.Dtos.Collection;
 using ShopApi.Models.Dtos.People.Address;
 using ShopApi.Models.People;
 
@@ -46,11 +45,24 @@ namespace ShopApi.Controllers.Addresses
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var addressReadDto = _mapper.Map<AddressReadDto>(await _repository.GetByIdAsync(id));
+                var addressReadDto = _mapper.Map<AddressReadDto>(model);
                 addressReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), addressReadDto);
             }
-            return BadRequest();
+            return BadRequest("Invalid address id");
+        }
+        
+        [HttpPost("create")]
+        public async Task<ActionResult<AddressReadDto>> CreateAsync([FromBody] AddressCreateDto addressCreateDto)
+        {
+            var model = _mapper.Map<Address>(addressCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var addressReadDto = _mapper.Map<AddressReadDto>(model);
+                return Created(nameof(CreateAsync), addressReadDto);
+            }
+            return BadRequest("Error when try to create address in database");
         }
     }
 }

@@ -43,6 +43,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/customer/update/:id",
                             Description = "Update customer with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/customer/create",
+                            Description = "Create customer with valid data or return BadRequest"
                         }
                     },
                     Employee = new[]
@@ -64,6 +70,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/employee/update/:id",
                             Description = "Update employee with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/employee/create",
+                            Description = "Create employee with valid data or return BadRequest"
                         }
                     },
                 },
@@ -86,6 +98,12 @@ namespace ShopApi.Controllers.Home
                         Method = Method.PUT.ToString(),
                         Path = "api/address/update/:id",
                         Description = "Update address with taken id or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.POST.ToString(),
+                        Path = "api/address/create",
+                        Description = "Create address with valid data or return BadRequest"
                     }
                 },
                 Orders = new[]
@@ -107,6 +125,12 @@ namespace ShopApi.Controllers.Home
                         Method = Method.PUT.ToString(),
                         Path = "api/order/update/:id",
                         Description = "Update order with taken id or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.POST.ToString(),
+                        Path = "api/order/create",
+                        Description = "Create order with valid data or return BadRequest"
                     }
                 },
                 Furnitures = new
@@ -151,6 +175,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/chair/update/:id",
                             Description = "Update chair with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/chair/create",
+                            Description = "Create chair with valid data or return BadRequest"
                         }
                     },
                     Corners = new[]
@@ -172,6 +202,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/corner/update/:id",
                             Description = "Update corner with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/corner/create",
+                            Description = "Create corner with valid data or return BadRequest"
                         }
                     },
                     Sofas = new[]
@@ -193,6 +229,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/sofa/update/:id",
                             Description = "Update sofa with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/sofa/create",
+                            Description = "Create sofa with valid data or return BadRequest"
                         }
                     },
                     Tables = new[]
@@ -214,6 +256,12 @@ namespace ShopApi.Controllers.Home
                             Method = Method.PUT.ToString(),
                             Path = "api/table/update/:id",
                             Description = "Update table with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.POST.ToString(),
+                            Path = "api/table/create",
+                            Description = $"Create table with valid data or return BadRequest"
                         }
                     }
                 },
@@ -236,6 +284,12 @@ namespace ShopApi.Controllers.Home
                         Method = Method.PUT.ToString(),
                         Path = "api/collection/update/:id",
                         Description = "Update collection with taken id or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.POST.ToString(),
+                        Path = "api/collection/create",
+                        Description = "Create collection with valid data or return BadRequest"
                     }
                 }
             };

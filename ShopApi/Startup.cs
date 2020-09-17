@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,10 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShopApi.DAL;
 using ShopApi.Extensions;
-using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Chair;
-using ShopApi.Models.Furnitures.FurnitureImplmentation;
-using ShopApi.Profiles.Converters;
-using ShopApi.Profiles.Converters.IdToCollection;
 
 namespace ShopApi
 {

@@ -45,11 +45,24 @@ namespace ShopApi.Controllers.Furniture
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var tableReadDto = _mapper.Map<TableReadDto>(await _repository.GetByIdAsync(id));
+                var tableReadDto = _mapper.Map<TableReadDto>(model);
                 tableReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), tableReadDto);
             }
             return BadRequest("Invalid Table Id");
+        }
+        
+        [HttpPost("create")]
+        public async Task<ActionResult<TableReadDto>> CreateAsync([FromBody] TableCreateDto tableCreateDto)
+        {
+            var model = _mapper.Map<Table>(tableCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var tableReadDto = _mapper.Map<TableReadDto>(model);
+                return Created(nameof(CreateAsync), tableReadDto);
+            }
+            return BadRequest("Error when try to create table in database");
         }
     }
 }

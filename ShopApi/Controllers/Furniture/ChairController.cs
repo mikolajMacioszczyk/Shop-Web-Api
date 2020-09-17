@@ -46,11 +46,24 @@ namespace ShopApi.Controllers.Furniture
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
-                var chairReadDto = _mapper.Map<ChairReadDto>(await _repository.GetByIdAsync(id));
+                var chairReadDto = _mapper.Map<ChairReadDto>(model);
                 chairReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), chairReadDto);
             }
             return BadRequest("Invalid Chair Id");
+        }
+        
+        [HttpPost("create")]
+        public async Task<ActionResult<ChairReadDto>> CreateAsync([FromBody] ChairCreateDto chairCreateDto)
+        {
+            var model = _mapper.Map<Chair>(chairCreateDto);
+            if (await _repository.CreateAsync(model))
+            {
+                await _repository.SaveChangesAsync();
+                var chairReadDto = _mapper.Map<ChairReadDto>(model);
+                return Created(nameof(CreateAsync), chairReadDto);
+            }
+            return BadRequest("Error when try to create chair in database");
         }
     }
 }

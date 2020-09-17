@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using ShopApi.DAL;
 using ShopApi.Models.Dtos.Collection;
 using ShopApi.Models.Dtos.Furniture;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Chair;
