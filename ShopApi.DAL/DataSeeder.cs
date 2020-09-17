@@ -22,6 +22,8 @@ namespace ShopApi.DAL
             List<Order> orders;
             List<Address> addresses;
             List<FurnitureCount> furnitureCounts;
+            List<Customer> customers;
+            List<Employee> employees;
             if (!context.CollectionItems.Any())
             {
                 collections = new List<Collection>()
@@ -113,7 +115,7 @@ namespace ShopApi.DAL
                     new FurnitureCount(){FurnitureId = chairs[1].Id, Count = 6}, 
                     new FurnitureCount(){FurnitureId = sofas[1].Id, Count = 1}, 
                     new FurnitureCount(){FurnitureId = tables[1].Id, Count = 1},
-                    new FurnitureCount(){FurnitureId = collections[1].Id, Count = 2},
+                    new FurnitureCount(){FurnitureId = corners[1].Id, Count = 2},
                     new FurnitureCount(){FurnitureId = chairs[2].Id, Count = 2}, 
                     new FurnitureCount(){FurnitureId = chairs[3].Id, Count = 2}, 
                     new FurnitureCount(){FurnitureId = sofas[3].Id, Count = 2}, 
@@ -170,9 +172,10 @@ namespace ShopApi.DAL
             {
                 addresses = await context.AddressItems.ToListAsync();
             }
+            
             if (!context.CustomerItems.Any())
             {
-                var customers = new List<Customer>()
+                customers = new List<Customer>()
                 {
                     new Customer(){Name = "Customer 1", Address = addresses[0], Orders = new Order[]{orders[0], orders[1]}},
                     new Customer(){Name = "Customer 2", Address = addresses[1], Orders = new Order[]{orders[2], orders[3]}},
@@ -180,15 +183,32 @@ namespace ShopApi.DAL
                 await context.CustomerItems.AddRangeAsync(customers);
                 await context.SaveChangesAsync();
             }
-
+            else
+            {
+                customers = await context.CustomerItems.ToListAsync();
+            }
+            
             if (!context.EmployeeItems.Any())
             {
-                var employees = new List<Employee>()
+                employees = new List<Employee>()
                 {
                     new Employee(){Name = "Employee 1", Address = addresses[2], Salary = 4500, JobTitles = JobTitles.Seller, Permission = Permission.Write, DateOfBirth = DateTime.Now, DateOfEmployment = DateTime.Now.AddDays(2)},
                     new Employee(){Name = "Employee 2", Address = addresses[0], Salary = 8500, JobTitles = JobTitles.Administrator, Permission = Permission.WriteAndChange, DateOfBirth = DateTime.Now, DateOfEmployment = DateTime.Now.AddDays(2)},
                 };
                 await context.EmployeeItems.AddRangeAsync(employees);
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                employees = await context.EmployeeItems.ToListAsync();
+            }
+
+            if (!context.PeopleItems.Any())
+            {
+                var people = new List<Person>();
+                people.AddRange(customers);
+                people.AddRange(employees);
+                await context.PeopleItems.AddRangeAsync(people);
                 await context.SaveChangesAsync();
             }
         }

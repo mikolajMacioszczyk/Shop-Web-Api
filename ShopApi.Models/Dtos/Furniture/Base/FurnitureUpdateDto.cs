@@ -1,4 +1,4 @@
-﻿namespace ShopApi.Models.Dtos.Furniture
+﻿namespace ShopApi.Models.Dtos.Furniture.Base
 {
     public class FurnitureUpdateDto
     {

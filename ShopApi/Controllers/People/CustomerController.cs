@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ShopApi.DAL.Repositories.Orders;
 using ShopApi.DAL.Repositories.People.Customer;
 using ShopApi.Models.Dtos.People.Customer;
 using ShopApi.Models.People;
+using ShopApi.QueryBuilder.People.Customer;
 
 namespace ShopApi.Controllers.People
 {
@@ -14,14 +15,14 @@ namespace ShopApi.Controllers.People
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _repository;
-        private readonly IOrderRepository _orderRepository;
+        private readonly ICustomerQueryBuilder _queryBuilder;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerRepository repository, IMapper mapper, IOrderRepository orderRepository)
+        public CustomerController(ICustomerRepository repository, IMapper mapper, ICustomerQueryBuilder queryBuilder)
         {
             _repository = repository;
             _mapper = mapper;
-            _orderRepository = orderRepository;
+            _queryBuilder = queryBuilder;
         }
 
         [HttpGet]
@@ -66,6 +67,32 @@ namespace ShopApi.Controllers.People
                 return Created(nameof(CreateAsync), customerReadDto);
             }
             return BadRequest("Error when try to create customer in database");
+        }
+        
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteAsync([FromRoute] int id)
+        {
+            if (await _repository.RemoveAsync(id))
+            {
+                await _repository.SaveChangesAsync();
+                return NoContent();
+            }
+            return NotFound("Not Found Customer with given Id");
+        }
+
+        [HttpGet("search")]
+        private async Task<ActionResult<IEnumerable<CustomerReadDto>>> SearchAsync(
+            [FromBody] CustomerSearchDto customerSearchDto)
+        {
+            _queryBuilder.GetAll();
+            if (!string.IsNullOrEmpty(customerSearchDto.Name))
+                _queryBuilder.WithNameLike(customerSearchDto.Name);
+            if (customerSearchDto.AddressId.HasValue)
+                _queryBuilder.WithAddress(customerSearchDto.AddressId.Value);
+            if (customerSearchDto.OrderIds != null && customerSearchDto.OrderIds.Any())
+                _queryBuilder.WithOrders(customerSearchDto.OrderIds);
+
+            return Ok(_mapper.Map<IEnumerable<CustomerReadDto>>(await _queryBuilder.ToListAsync()));
         }
     }
 }

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopApi.DAL.Repositories.Address;
-using ShopApi.Models.Dtos.People.Address;
+using ShopApi.Models.Dtos.Address;
 using ShopApi.Models.People;
+using ShopApi.QueryBuilder.Address;
 
 namespace ShopApi.Controllers.Addresses
 {
@@ -13,12 +16,14 @@ namespace ShopApi.Controllers.Addresses
     public class AddressController : Controller
     {
         private readonly IAddressRepository _repository;
+        private readonly IAddressQueryBuilder _queryBuilder;
         private readonly IMapper _mapper;
 
-        public AddressController(IAddressRepository repository, IMapper mapper)
+        public AddressController(IAddressRepository repository, IMapper mapper, IAddressQueryBuilder queryBuilder)
         {
             _repository = repository;
             _mapper = mapper;
+            _queryBuilder = queryBuilder;
         }
 
         [HttpGet]
@@ -63,6 +68,41 @@ namespace ShopApi.Controllers.Addresses
                 return Created(nameof(CreateAsync), addressReadDto);
             }
             return BadRequest("Error when try to create address in database");
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteAsync([FromRoute] int id)
+        {
+            if (await _repository.RemoveAsync(id))
+            {
+                try
+                {
+                    await _repository.SaveChangesAsync();
+                    return NoContent();
+                }
+                catch (DbUpdateException)
+                {
+                    return Conflict("Cannot remove Address used by other entities. First remove Binding." +
+                                    " If you want to find who use this address check url /api/person/search witch Address id = "+id);
+                }
+            }
+            return NotFound("Not Found Address with given Id");
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Address>>> SearchAsync([FromBody] AddressSearchDto addressSearchDto)
+        {
+            _queryBuilder.GetAll();
+            if (!string.IsNullOrEmpty(addressSearchDto.City))
+                _queryBuilder.WithCityLike(addressSearchDto.City);
+            if (!string.IsNullOrEmpty(addressSearchDto.Street))
+                _queryBuilder.WithStreetLike(addressSearchDto.Street);
+            if (!string.IsNullOrEmpty(addressSearchDto.PostalCode))
+                _queryBuilder.WithPostalCode(addressSearchDto.PostalCode);
+            if (addressSearchDto.House.HasValue)
+                _queryBuilder.WithHouse(addressSearchDto.House.Value);
+
+            return Ok(_mapper.Map<IEnumerable<AddressReadDto>>(await _queryBuilder.ToListAsync()));
         }
     }
 }

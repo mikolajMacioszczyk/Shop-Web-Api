@@ -1,4 +1,4 @@
-﻿namespace ShopApi.Models.Dtos.People.Address
+﻿namespace ShopApi.Models.Dtos.Address
 {
     public class AddressReadDto
     {

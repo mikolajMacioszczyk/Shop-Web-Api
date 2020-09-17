@@ -30,7 +30,7 @@ namespace ShopApi
 
             services.AddFurnitureConfig().AddOrderConfig().AddPeopleConfig()
                 .AddCollectionConfig().AddCollectionConfig().AddAddressesConfig()
-                .AddConvertersConfig();
+                .AddConvertersConfig().AddQueryBuilderConfig();
 
             
             services.AddControllers();

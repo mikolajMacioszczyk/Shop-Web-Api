@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using ShopApi.Models.Dtos.Address;
 using ShopApi.Models.Dtos.Collection;
 using ShopApi.Models.Dtos.Furniture;
+using ShopApi.Models.Dtos.Furniture.Base;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Chair;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Sofa;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Table;
 using ShopApi.Models.Dtos.Orders.FurnitureCountDtos;
 using ShopApi.Models.Dtos.Orders.OrderDtos;
-using ShopApi.Models.Dtos.People.Address;
+using ShopApi.Models.Dtos.People.Base;
 using ShopApi.Models.Dtos.People.Customer;
 using ShopApi.Models.Dtos.People.Employee;
 using ShopApi.Models.Furnitures;
@@ -52,6 +54,8 @@ namespace ShopApi.Profiles
                 .ForMember(target => target.Furnitures,
                     obj => obj.MapFrom(src => src.Furnitures));
             CreateMap<Address, AddressReadDto>();
+
+            CreateMap<Person, PersonReadDto>();
             CreateMap<Customer, CustomerReadDto>();
             CreateMap<Employee, EmployeeReadDto>()
                 .ForMember(target => target.JobTitles,

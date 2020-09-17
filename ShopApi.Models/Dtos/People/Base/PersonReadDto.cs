@@ -1,6 +1,6 @@
-﻿using ShopApi.Models.Dtos.People.Address;
+﻿using ShopApi.Models.Dtos.Address;
 
-namespace ShopApi.Models.Dtos.People
+namespace ShopApi.Models.Dtos.People.Base
 {
     public class PersonReadDto
     {

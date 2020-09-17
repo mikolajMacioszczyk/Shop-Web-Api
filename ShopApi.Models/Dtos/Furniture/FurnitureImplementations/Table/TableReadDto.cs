@@ -1,4 +1,6 @@
-﻿namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Table
+﻿using ShopApi.Models.Dtos.Furniture.Base;
+
+namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Table
 {
     public class TableReadDto : FurnitureReadDto
     {

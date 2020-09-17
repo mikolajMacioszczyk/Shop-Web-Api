@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,11 @@ namespace ShopApi.DAL.Repositories.Collection
         public CollectionRepository(ShopDbContext db)
         {
             _db = db;
+        }
+
+        public IQueryable<Models.Furnitures.Collection> GetIQuerable()
+        {
+            return _db.CollectionItems.AsQueryable();
         }
 
         public async Task<IEnumerable<Models.Furnitures.Collection>> GetAllAsync()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,11 @@ namespace ShopApi.DAL.Repositories.Address
         public AddressRepository(ShopDbContext db)
         {
             _db = db;
+        }
+
+        public IQueryable<Models.People.Address> GetIQuerable()
+        {
+            return _db.AddressItems.AsQueryable();
         }
 
         public async Task<IEnumerable<Models.People.Address>> GetAllAsync()

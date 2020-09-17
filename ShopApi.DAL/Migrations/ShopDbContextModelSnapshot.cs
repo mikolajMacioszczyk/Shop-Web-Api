@@ -162,7 +162,7 @@ namespace ShopApi.DAL.Migrations
                     b.ToTable("AddressItems");
                 });
 
-            modelBuilder.Entity("ShopApi.Models.People.Customer", b =>
+            modelBuilder.Entity("ShopApi.Models.People.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,6 +171,10 @@ namespace ShopApi.DAL.Migrations
 
                     b.Property<int?>("AddressId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -181,44 +185,9 @@ namespace ShopApi.DAL.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("CustomerItems");
-                });
+                    b.ToTable("PeopleItems");
 
-            modelBuilder.Entity("ShopApi.Models.People.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOfEmployment")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("JobTitles")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("Permission")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Salary")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("EmployeeItems");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
             modelBuilder.Entity("ShopApi.Models.Furnitures.FurnitureImplmentation.Chair", b =>
@@ -267,6 +236,35 @@ namespace ShopApi.DAL.Migrations
                     b.HasDiscriminator().HasValue("Table");
                 });
 
+            modelBuilder.Entity("ShopApi.Models.People.Customer", b =>
+                {
+                    b.HasBaseType("ShopApi.Models.People.Person");
+
+                    b.HasDiscriminator().HasValue("Customer");
+                });
+
+            modelBuilder.Entity("ShopApi.Models.People.Employee", b =>
+                {
+                    b.HasBaseType("ShopApi.Models.People.Person");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfEmployment")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobTitles")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Salary")
+                        .HasColumnType("float");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
             modelBuilder.Entity("ShopApi.Models.Furnitures.Furniture", b =>
                 {
                     b.HasOne("ShopApi.Models.Furnitures.Collection", "Collection")
@@ -298,16 +296,7 @@ namespace ShopApi.DAL.Migrations
                         .HasForeignKey("CustomerId");
                 });
 
-            modelBuilder.Entity("ShopApi.Models.People.Customer", b =>
-                {
-                    b.HasOne("ShopApi.Models.People.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("ShopApi.Models.People.Employee", b =>
+            modelBuilder.Entity("ShopApi.Models.People.Person", b =>
                 {
                     b.HasOne("ShopApi.Models.People.Address", "Address")
                         .WithMany()

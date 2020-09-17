@@ -24,6 +24,27 @@ namespace ShopApi.Controllers.Home
                     }
                 },
                 People = new {
+                    Person = new[]
+                    {
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/people",
+                            Description = "Return full list of people"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/people/:id",
+                            Description = "Return person with taken id or NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/people/search",
+                            Description = "Return IENumerable<Person> which meets given criteria"
+                        }
+                    },
                     Customer = new[]
                     {
                         new NavigationHelper()
@@ -49,6 +70,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/customer/create",
                             Description = "Create customer with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/customer/delete/:id",
+                            Description = "Delete Customer with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/customer/search",
+                            Description = "Return IENumerable<Customer> which meets given criteria"
                         }
                     },
                     Employee = new[]
@@ -76,6 +109,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/employee/create",
                             Description = "Create employee with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/employee/delete/:id",
+                            Description = "Delete employee with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/employee/search",
+                            Description = "Return IENumerable<Employee> which meets given criteria"
                         }
                     },
                 },
@@ -104,6 +149,18 @@ namespace ShopApi.Controllers.Home
                         Method = Method.POST.ToString(),
                         Path = "api/address/create",
                         Description = "Create address with valid data or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.DELETE.ToString(),
+                        Path = "api/address/delete/:id",
+                        Description = "Delete Address with valid id or return NotFound"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.GET.ToString(),
+                        Path = "api/address/search",
+                        Description = "Return IENumerable<Address> which meets given criteria"
                     }
                 },
                 Orders = new[]
@@ -131,6 +188,18 @@ namespace ShopApi.Controllers.Home
                         Method = Method.POST.ToString(),
                         Path = "api/order/create",
                         Description = "Create order with valid data or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.DELETE.ToString(),
+                        Path = "api/order/delete/:id",
+                        Description = "Delete Order with valid id or return NotFound"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.GET.ToString(),
+                        Path = "api/order/search",
+                        Description = "Return IENumerable<Order> which meets given criteria"
                     }
                 },
                 Furnitures = new
@@ -152,8 +221,14 @@ namespace ShopApi.Controllers.Home
                         new NavigationHelper()
                         {
                             Method = Method.PUT.ToString(),
-                            Path = "api/order/update/:id",
-                            Description = "Update order with taken id or return BadRequest"
+                            Path = "api/furniture/update/:id",
+                            Description = "Update furniture with taken id or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/furniture/search",
+                            Description = "Return IEnumerable<Furniture> which meet given criteria"
                         }
                     },
                     Chairs = new[]
@@ -181,6 +256,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/chair/create",
                             Description = "Create chair with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/chair/delete/:id",
+                            Description = "Delete Chair with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/chair/search",
+                            Description = "Return IENumerable<Chair> which meets given criteria"
                         }
                     },
                     Corners = new[]
@@ -208,6 +295,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/corner/create",
                             Description = "Create corner with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/corner/delete/:id",
+                            Description = "Delete Corner with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/corner/search",
+                            Description = "Return IENumerable<Corner> which meets given criteria"
                         }
                     },
                     Sofas = new[]
@@ -235,6 +334,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/sofa/create",
                             Description = "Create sofa with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/sofa/delete/:id",
+                            Description = "Delete Sofa with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/sofa/search",
+                            Description = "Return IENumerable<Sofa> which meets given criteria"
                         }
                     },
                     Tables = new[]
@@ -262,6 +373,18 @@ namespace ShopApi.Controllers.Home
                             Method = Method.POST.ToString(),
                             Path = "api/table/create",
                             Description = $"Create table with valid data or return BadRequest"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.DELETE.ToString(),
+                            Path = "api/table/delete/:id",
+                            Description = "Delete Table with valid id or return NotFound"
+                        },
+                        new NavigationHelper()
+                        {
+                            Method = Method.GET.ToString(),
+                            Path = "api/table/search",
+                            Description = "Return IENumerable<Table> which meets given criteria"
                         }
                     }
                 },
@@ -290,6 +413,18 @@ namespace ShopApi.Controllers.Home
                         Method = Method.POST.ToString(),
                         Path = "api/collection/create",
                         Description = "Create collection with valid data or return BadRequest"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.DELETE.ToString(),
+                        Path = "api/collection/delete/:id",
+                        Description = "Delete Collection with valid id or return NotFound"
+                    },
+                    new NavigationHelper()
+                    {
+                        Method = Method.GET.ToString(),
+                        Path = "api/collection/search",
+                        Description = "Return IENumerable<Collection> which meets given criteria"
                     }
                 }
             };

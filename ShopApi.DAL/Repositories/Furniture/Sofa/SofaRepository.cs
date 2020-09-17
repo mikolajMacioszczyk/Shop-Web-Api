@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,11 @@ namespace ShopApi.DAL.Repositories.Furniture.Sofa
         public SofaRepository(ShopDbContext db)
         {
             _db = db;
+        }
+
+        public IQueryable<Models.Furnitures.FurnitureImplmentation.Sofa> GetIQuerable()
+        {
+            return _db.SofaItems.AsQueryable();
         }
 
         public async Task<IEnumerable<Models.Furnitures.FurnitureImplmentation.Sofa>> GetAllAsync()

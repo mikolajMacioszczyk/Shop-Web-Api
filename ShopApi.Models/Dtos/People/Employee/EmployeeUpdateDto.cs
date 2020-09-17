@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ShopApi.Models.Dtos.People.Base;
 
 namespace ShopApi.Models.Dtos.People.Employee
 {

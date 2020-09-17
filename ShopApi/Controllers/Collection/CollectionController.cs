@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Collection;
 using ShopApi.Models.Dtos.Collection;
+using ShopApi.QueryBuilder.Collection;
 
 namespace ShopApi.Controllers.Collection
 {
@@ -12,12 +13,14 @@ namespace ShopApi.Controllers.Collection
     public class CollectionController : Controller
     {
         private readonly ICollectionRepository _repository;
+        private readonly ICollectionQueryBuilder _queryBuilder;
         private readonly IMapper _mapper;
 
-        public CollectionController(ICollectionRepository repository, IMapper mapper)
+        public CollectionController(ICollectionRepository repository, IMapper mapper, ICollectionQueryBuilder queryBuilder)
         {
             _repository = repository;
             _mapper = mapper;
+            _queryBuilder = queryBuilder;
         }
 
         [HttpGet]
@@ -62,6 +65,33 @@ namespace ShopApi.Controllers.Collection
                 return Created(nameof(CreateAsync), collectionReadDto);
             }
             return BadRequest("Error when try to create collection in database");
+        }
+        
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteAsync([FromRoute] int id)
+        {
+            if (await _repository.RemoveAsync(id))
+            {
+                await _repository.SaveChangesAsync();
+                return NoContent();
+            }
+            return NotFound("Not Found Collection with given Id");
+        }
+        
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Models.Furnitures.Collection>>> SearchAsync([FromBody] CollectionSearchDto collectionSearchDto)
+        {
+            _queryBuilder.GetAll();
+            if (!string.IsNullOrEmpty(collectionSearchDto.Name))
+                _queryBuilder.WithNameLike(collectionSearchDto.Name);
+            if (collectionSearchDto.IsLimited.HasValue && collectionSearchDto.IsLimited.Value)
+                _queryBuilder.OnlyLimited();
+            if (collectionSearchDto.IsNew.HasValue && collectionSearchDto.IsNew.Value)
+                _queryBuilder.OnlyNew();
+            if (collectionSearchDto.IsOnSale.HasValue && collectionSearchDto.IsOnSale.Value)
+                _queryBuilder.OnlyOnSale();
+            
+            return Ok(_mapper.Map<IEnumerable<CollectionReadDto>>(await _queryBuilder.ToListAsync()));
         }
     }
 }

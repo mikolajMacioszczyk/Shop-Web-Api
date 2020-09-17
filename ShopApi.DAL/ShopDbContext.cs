@@ -31,5 +31,6 @@ namespace ShopApi.DAL
         public DbSet<Address> AddressItems { get; set; }
         public DbSet<Customer> CustomerItems { get; set; }
         public DbSet<Employee> EmployeeItems { get; set; }
+        public DbSet<Person> PeopleItems { get; set; }
     }
 }

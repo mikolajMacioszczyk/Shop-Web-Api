@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ShopApi.Models.Dtos.People.Base;
 
 namespace ShopApi.Models.Dtos.People.Customer
 {

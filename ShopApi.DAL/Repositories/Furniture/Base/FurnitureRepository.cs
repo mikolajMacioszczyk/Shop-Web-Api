@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,11 @@ namespace ShopApi.DAL.Repositories.Furniture.Base
             _db = db;
         }
 
+        public IQueryable<Models.Furnitures.Furniture> GetQuerable()
+        {
+            return _db.FurnitureItems.Include(f => f.Collection).AsQueryable();
+        }
+
         public async Task<IEnumerable<Models.Furnitures.Furniture>> GetAllAsync()
         {
             return await _db.FurnitureItems.Include(f => f.Collection).ToListAsync();
@@ -23,26 +29,6 @@ namespace ShopApi.DAL.Repositories.Furniture.Base
         {
             return await _db.FurnitureItems.Include(f => f.Collection)
                 .FirstOrDefaultAsync(f => f.Id == id);
-        }
-
-        public async Task<bool> CreateAsync(Models.Furnitures.Furniture created)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task<bool> UpdateAsync(int id, Models.Furnitures.Furniture updated)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task<bool> RemoveAsync(int id)
-        {
-            throw new NotSupportedException();
-        }
-
-        public async Task SaveChangesAsync()
-        {
-            await _db.SaveChangesAsync();
         }
     }
 }

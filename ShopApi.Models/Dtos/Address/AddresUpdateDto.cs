@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopApi.Models.Dtos.People.Address
+namespace ShopApi.Models.Dtos.Address
 {
     public class AddressUpdateDto
     {

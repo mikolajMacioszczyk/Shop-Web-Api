@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShopApi.Models.Dtos.People
+namespace ShopApi.Models.Dtos.People.Base
 {
     public class PersonCreateDto
     {

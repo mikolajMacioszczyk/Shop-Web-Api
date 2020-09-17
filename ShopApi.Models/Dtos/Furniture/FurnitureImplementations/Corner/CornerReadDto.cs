@@ -1,4 +1,6 @@
-﻿namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner
+﻿using ShopApi.Models.Dtos.Furniture.Base;
+
+namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner
 {
     public class CornerReadDto : FurnitureReadDto
     {

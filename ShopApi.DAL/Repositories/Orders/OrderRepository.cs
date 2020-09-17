@@ -15,6 +15,11 @@ namespace ShopApi.DAL.Repositories.Orders
             _db = db;
         }
 
+        public IQueryable<Order> GetIQuerable()
+        {
+            return _db.OrderItems.AsQueryable();
+        }
+
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
             return await _db.OrderItems.Include(o => o.Furnitures)

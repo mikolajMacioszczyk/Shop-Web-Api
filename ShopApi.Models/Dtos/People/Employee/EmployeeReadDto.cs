@@ -1,4 +1,5 @@
 ﻿using System;
+using ShopApi.Models.Dtos.People.Base;
 using ShopApi.Models.People;
 
 namespace ShopApi.Models.Dtos.People.Employee
