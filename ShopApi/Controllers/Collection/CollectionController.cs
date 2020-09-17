@@ -38,9 +38,9 @@ namespace ShopApi.Controllers.Collection
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CollectionReadDto>> CreateAsync([FromRoute]int id,[FromBody] CollectionCreateDto collectionCreateDto)
+        public async Task<ActionResult<CollectionReadDto>> CreateAsync([FromRoute]int id,[FromBody] CollectionUpdateDto collectionUpdateDto)
         {
-            var model = _mapper.Map<Models.Furnitures.Collection>(collectionCreateDto);
+            var model = _mapper.Map<Models.Furnitures.Collection>(collectionUpdateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();

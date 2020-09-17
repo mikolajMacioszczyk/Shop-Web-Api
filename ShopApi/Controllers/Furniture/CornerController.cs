@@ -41,9 +41,9 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CornerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CornerCreateDto cornerCreateDto)
+        public async Task<ActionResult<CornerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CornerUpdateDto cornerUpdateDto)
         {
-            Corner model = _mapper.Map<Corner>(cornerCreateDto);
+            Corner model = _mapper.Map<Corner>(cornerUpdateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
