@@ -38,7 +38,13 @@ namespace ShopApi.DAL.Repositories.Orders
                 .FirstOrDefaultAsync(o => o.Id == id);
             if (fromDb == null){return false;}
 
-            fromDb.Furnitures = updated.Furnitures;
+            fromDb.Furnitures = updated.Furnitures
+                .Select(f =>
+                {
+                    var furnitureCount =  _db.FurnitureCounts.FirstOrDefault(
+                               fc => fc.Count == f.Count && fc.FurnitureId == f.FurnitureId);
+                    return furnitureCount ?? f;
+                }).ToList();
             fromDb.Status = updated.Status;
             fromDb.TotalPrize = updated.TotalPrize;
             fromDb.TotalWeight = updated.TotalWeight;

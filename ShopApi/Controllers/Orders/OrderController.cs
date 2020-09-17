@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Orders;
 using ShopApi.Models.Dtos.Orders;
+using ShopApi.Models.Orders;
 
 namespace ShopApi.Controllers.Orders
 {
@@ -35,6 +36,20 @@ namespace ShopApi.Controllers.Orders
                 return NotFound();
             }
             return Ok(_mapper.Map<OrderReadDto>(model));
+        }
+        
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult<OrderCreateDto>> UpdateAsync(int id,[FromBody] OrderCreateDto orderCreateDto)
+        {
+            Order model = _mapper.Map<Order>(orderCreateDto);
+
+            if (await _repository.UpdateAsync(id,model))
+            {
+                await _repository.SaveChangesAsync();
+                var orderReadDto = _mapper.Map<OrderReadDto>(await _repository.GetByIdAsync(id));
+                return Created(nameof(GetByIdAsync), orderReadDto);
+            }
+            return BadRequest("Invalid Table Id");
         }
     }
 }

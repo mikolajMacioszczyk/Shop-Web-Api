@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShopApi.DAL;
 using ShopApi.Extensions;
+using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Chair;
+using ShopApi.Models.Furnitures.FurnitureImplmentation;
+using ShopApi.Profiles.Converters;
+using ShopApi.Profiles.Converters.IdToCollection;
 
 namespace ShopApi
 {
@@ -27,9 +31,12 @@ namespace ShopApi
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            services.AddFurnitureConfig().AddOrderConfig().AddPeopleConfig();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddFurnitureConfig().AddOrderConfig().AddPeopleConfig()
+                .AddCollectionConfig().AddCollectionConfig().AddAddressesConfig()
+                .AddConvertersConfig();
+
             
             services.AddControllers();
         }

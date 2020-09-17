@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ShopApi.DAL.Repositories.Collection;
 using ShopApi.DAL.Repositories.Furniture.Corner;
-using ShopApi.Models.Dtos.Furniture.FurnitureImplementations;
+using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner;
+using ShopApi.Models.Furnitures.FurnitureImplmentation;
 
 namespace ShopApi.Controllers.Furniture
 {
@@ -35,6 +38,19 @@ namespace ShopApi.Controllers.Furniture
                 return NotFound();
             }
             return Ok(_mapper.Map<CornerReadDto>(model));
+        }
+        
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult<CornerReadDto>> UpdateAsync(int id,[FromBody] CornerCreateDto cornerCreateDto)
+        {
+            Corner model = _mapper.Map<Corner>(cornerCreateDto);
+            if (await _repository.UpdateAsync(id,model))
+            {
+                await _repository.SaveChangesAsync();
+                var collectionReadDto = _mapper.Map<CornerCreateDto>(await _repository.GetByIdAsync(id));
+                return Created(nameof(GetByIdAsync), collectionReadDto);
+            }
+            return BadRequest("Invalid Corner Id");
         }
     }
 }

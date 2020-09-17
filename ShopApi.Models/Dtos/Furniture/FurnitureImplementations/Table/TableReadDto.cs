@@ -1,4 +1,4 @@
-﻿namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations
+﻿namespace ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Table
 {
     public class TableReadDto : FurnitureReadDto
     {

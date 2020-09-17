@@ -49,12 +49,16 @@ namespace ShopApi.DAL.Repositories.People.Emplyee
 
         public async Task<bool> RemoveAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var fromDb = await _db.EmployeeItems.FirstOrDefaultAsync(e => e.Id == id);
+            if (fromDb == null){return false;}
+
+            _db.EmployeeItems.Remove(fromDb);
+            return true;
         }
 
         public async Task SaveChangesAsync()
         {
-            throw new System.NotImplementedException();
+            await _db.SaveChangesAsync();
         }
     }
 }

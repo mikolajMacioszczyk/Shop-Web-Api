@@ -1,4 +1,6 @@
-﻿namespace ShopApi.Models.Dtos.Furniture
+﻿using ShopApi.Models.Dtos.Collection;
+
+namespace ShopApi.Models.Dtos.Furniture
 {
     public class FurnitureReadDto
     {
