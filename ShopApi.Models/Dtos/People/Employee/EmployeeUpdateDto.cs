@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopApi.Models.Dtos.People.Employee
 {
-    public class EmployeeCreateDto : PersonCreateDto
+    public class EmployeeUpdateDto : PersonUpdateDto
     {
         [Required]
         public double Salary { get; set; }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ShopApi.Models.Dtos.Orders.FurnitureCountDtos;
 
-namespace ShopApi.Models.Dtos.Orders
+namespace ShopApi.Models.Dtos.Orders.OrderDtos
 {
     public class OrderCreateDto
     {

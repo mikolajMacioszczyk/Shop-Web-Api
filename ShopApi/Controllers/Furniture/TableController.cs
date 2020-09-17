@@ -39,9 +39,9 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<TableReadDto>> UpdateAsync([FromRoute]int id,[FromBody] TableCreateDto tableCreateDto)
+        public async Task<ActionResult<TableReadDto>> UpdateAsync([FromRoute]int id,[FromBody] TableUpdateDto tableUpdateDto)
         {
-            Table model = _mapper.Map<Table>(tableCreateDto);
+            Table model = _mapper.Map<Table>(tableUpdateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();

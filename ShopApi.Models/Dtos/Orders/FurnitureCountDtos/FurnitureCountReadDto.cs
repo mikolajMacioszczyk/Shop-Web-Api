@@ -1,4 +1,4 @@
-﻿namespace ShopApi.Models.Dtos.Orders
+﻿namespace ShopApi.Models.Dtos.Orders.FurnitureCountDtos
 {
     public struct FurnitureCountReadDto
     {

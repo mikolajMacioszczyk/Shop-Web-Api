@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ShopApi.Models.Orders;
 
-namespace ShopApi.Models.Dtos.Orders
+namespace ShopApi.Models.Dtos.Orders.OrderDtos
 {
     public class OrderReadDto
     {

@@ -40,9 +40,9 @@ namespace ShopApi.Controllers.Addresses
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<AddressReadDto>> CreateAsync([FromRoute]int id,[FromBody] AddressCreateDto addressCreateDto)
+        public async Task<ActionResult<AddressReadDto>> UpdateAsync([FromRoute]int id,[FromBody] AddressUpdateDto addressUpdateDto)
         {
-            var model = _mapper.Map<Address>(addressCreateDto);
+            var model = _mapper.Map<Address>(addressUpdateDto);
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();

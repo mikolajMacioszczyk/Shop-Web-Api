@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ShopApi.Models.Dtos.Orders;
+using ShopApi.Models.Dtos.Orders.OrderDtos;
 
 namespace ShopApi.Models.Dtos.People.Customer
 {

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.People.Emplyee;
+using ShopApi.Models.Dtos.People.Customer;
 using ShopApi.Models.Dtos.People.Employee;
 using ShopApi.Models.People;
 
@@ -39,9 +40,9 @@ namespace ShopApi.Controllers.People
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<EmployeeReadDto>> UpdateAsync(int id,[FromBody] EmployeeCreateDto customerCreateDto)
+        public async Task<ActionResult<EmployeeReadDto>> UpdateAsync(int id,[FromBody] EmployeeUpdateDto employeeUpdateDto)
         {
-            var model = _mapper.Map<Employee>(customerCreateDto);
+            var model = _mapper.Map<Employee>(employeeUpdateDto);
             if (await _repository.UpdateAsync(id, model))
             {
                 await _repository.SaveChangesAsync();

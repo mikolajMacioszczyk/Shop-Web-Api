@@ -45,9 +45,9 @@ namespace ShopApi.Controllers.People
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<CustomerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CustomerCreateDto customerCreateDto)
+        public async Task<ActionResult<CustomerReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CustomerUpdateDto customerUpdateDto)
         {
-            var model = _mapper.Map<Customer>(customerCreateDto);
+            var model = _mapper.Map<Customer>(customerUpdateDto);
             if (await _repository.UpdateAsync(id, model))
             {
                 await _repository.SaveChangesAsync();

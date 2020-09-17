@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Orders;
 using ShopApi.Models.Dtos.Orders;
+using ShopApi.Models.Dtos.Orders.OrderDtos;
 using ShopApi.Models.Orders;
 
 namespace ShopApi.Controllers.Orders
@@ -39,9 +40,9 @@ namespace ShopApi.Controllers.Orders
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<OrderCreateDto>> UpdateAsync([FromRoute]int id,[FromBody] OrderCreateDto orderCreateDto)
+        public async Task<ActionResult<OrderCreateDto>> UpdateAsync([FromRoute]int id,[FromBody] OrderUpdateDto orderUpdateDto)
         {
-            Order model = _mapper.Map<Order>(orderCreateDto);
+            Order model = _mapper.Map<Order>(orderUpdateDto);
 
             if (await _repository.UpdateAsync(id,model))
             {
