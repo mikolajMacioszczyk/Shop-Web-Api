@@ -34,6 +34,8 @@ namespace ShopApi.DAL.Repositories.People.Customer
 
         public async Task<bool> CreateAsync(Models.People.Customer created)
         {
+            if (created == null)
+                return false;
             await _db.CustomerItems.AddAsync(created);
             return true;
         }
@@ -42,7 +44,7 @@ namespace ShopApi.DAL.Repositories.People.Customer
         {
             var fromDb = await _db.CustomerItems
                 .FirstOrDefaultAsync(c => c.Id == id);
-            if (fromDb == null){return false;}
+            if (fromDb == null || updated == null){return false;}
 
             fromDb.Orders = updated.Orders;
             fromDb.Address = updated.Address;

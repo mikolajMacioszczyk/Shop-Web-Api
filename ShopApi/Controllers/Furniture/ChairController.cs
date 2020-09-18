@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +43,9 @@ namespace ShopApi.Controllers.Furniture
         }
         
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<ChairReadDto>> UpdateAsync([FromRoute]int id,[FromBody] ChairCreateDto chairCreateDto)
+        public async Task<ActionResult<ChairReadDto>> UpdateAsync([FromRoute]int id,[FromBody] CharUpdateDto charUpdateDto)
         {
-            Chair model = _mapper.Map<Chair>(chairCreateDto);
+            Chair model = _mapper.Map<Chair>(charUpdateDto);
 
             if (await _repository.UpdateAsync(id,model))
             {
@@ -72,10 +73,17 @@ namespace ShopApi.Controllers.Furniture
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] int id)
         {
-            if (await _repository.RemoveAsync(id))
+            try
             {
-                await _repository.SaveChangesAsync();
-                return NoContent();
+                if (await _repository.RemoveAsync(id))
+                {
+                    await _repository.SaveChangesAsync();
+                    return NoContent();
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                return Conflict(e.Message);
             }
             return NotFound("Not Found Chair with given Id");
         }

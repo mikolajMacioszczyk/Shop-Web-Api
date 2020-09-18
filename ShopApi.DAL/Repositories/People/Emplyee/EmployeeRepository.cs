@@ -33,6 +33,8 @@ namespace ShopApi.DAL.Repositories.People.Emplyee
 
         public async Task<bool> CreateAsync(Employee created)
         {
+            if (created == null)
+                return false;
             await _db.EmployeeItems.AddAsync(created);
             return true;
         }
@@ -40,7 +42,7 @@ namespace ShopApi.DAL.Repositories.People.Emplyee
         public async Task<bool> UpdateAsync(int id, Employee updated)
         {
             var fromDb = await _db.EmployeeItems.FirstOrDefaultAsync(e => e.Id == id);
-            if (fromDb == null){return false;}
+            if (fromDb == null || updated == null){return false;}
 
             fromDb.Permission = updated.Permission;
             fromDb.Salary = updated.Salary;

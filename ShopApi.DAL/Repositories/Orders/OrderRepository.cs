@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,12 @@ namespace ShopApi.DAL.Repositories.Orders
 
         public async Task<bool> CreateAsync(Order created)
         {
+            if (created == null)
+                return false;
+            var copy = created.Furnitures;
+            created.Furnitures = created.Furnitures.Where(fc => !_db.FurnitureCounts.Contains(fc)).ToList();
             await _db.OrderItems.AddAsync(created);
+            created.Furnitures = copy;
             return true;
         }
 
@@ -41,7 +47,7 @@ namespace ShopApi.DAL.Repositories.Orders
         {
             var fromDb = await _db.OrderItems.Include(o => o.Furnitures)
                 .FirstOrDefaultAsync(o => o.Id == id);
-            if (fromDb == null){return false;}
+            if (fromDb == null || updated == null){return false;}
 
             fromDb.Furnitures = updated.Furnitures
                 .Select(f =>
@@ -64,6 +70,11 @@ namespace ShopApi.DAL.Repositories.Orders
             var fromDb = await _db.OrderItems.Include(o => o.Furnitures)
                 .FirstOrDefaultAsync(o => o.Id == id);
             if (fromDb == null){return false;}
+
+            if ((await _db.CustomerItems.FirstOrDefaultAsync(c => c.Orders.Any(o => o.Id == id)) != null))
+            {
+                throw new InvalidOperationException("Cannot remove order used by other entities in database. First remove binding between entities.");
+            }
 
             _db.OrderItems.Remove(fromDb);
             return true;

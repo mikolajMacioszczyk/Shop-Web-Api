@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ namespace ShopApi.DAL.Repositories.Furniture.Chair
 
         public async Task<bool> CreateAsync(Models.Furnitures.FurnitureImplmentation.Chair created)
         {
+            if (created == null)
+                return false;
             await _db.ChairItems.AddAsync(created);
             return true;
         }
@@ -38,7 +41,7 @@ namespace ShopApi.DAL.Repositories.Furniture.Chair
         public async Task<bool> UpdateAsync(int id, Models.Furnitures.FurnitureImplmentation.Chair updated)
         {
             var fromDb = await _db.ChairItems.FirstOrDefaultAsync(s => s.Id == id);
-            if (fromDb == null){return false;}
+            if (fromDb == null || updated == null){return false;}
 
             fromDb.Collection = updated.Collection;
             fromDb.Height = updated.Height;
@@ -54,6 +57,11 @@ namespace ShopApi.DAL.Repositories.Furniture.Chair
         {
             var fromDb = await _db.ChairItems.FirstOrDefaultAsync(s => s.Id == id);
             if (fromDb == null){return false;}
+
+            if ((await _db.FurnitureCounts.FirstOrDefaultAsync(fc => fc.FurnitureId == id) != null))
+            {
+                throw new InvalidOperationException("Cannot remove furniture used in other entities in database. First remove binding within entities.");
+            }
 
             _db.ChairItems.Remove(fromDb);
             return true;

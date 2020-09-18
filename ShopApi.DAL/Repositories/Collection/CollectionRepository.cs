@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ namespace ShopApi.DAL.Repositories.Collection
 
         public async Task<bool> CreateAsync(Models.Furnitures.Collection created)
         {
+            if (created == null)
+                return false;
             await _db.CollectionItems.AddAsync(created);
             return true;
         }
@@ -38,7 +41,7 @@ namespace ShopApi.DAL.Repositories.Collection
         public async Task<bool> UpdateAsync(int id, Models.Furnitures.Collection updated)
         {
             var fromDb = await _db.CollectionItems.FirstOrDefaultAsync(c => c.Id == id);
-            if (fromDb == null){return false;}
+            if (fromDb == null || updated == null){return false;}
 
             fromDb.Name = updated.Name;
             fromDb.IsLimited = updated.IsLimited;
@@ -52,6 +55,11 @@ namespace ShopApi.DAL.Repositories.Collection
         {
             var fromDb = await _db.CollectionItems.FirstOrDefaultAsync(c => c.Id == id);
             if (fromDb == null){return false;}
+
+            if (await _db.FurnitureItems.FirstOrDefaultAsync(f => f.Collection.Id == id) != null)
+            {
+                throw new InvalidOperationException("Cannot remove collection used by other entities in database. First remove binding with other entities.");
+            }
 
             _db.CollectionItems.Remove(fromDb);
             return true;

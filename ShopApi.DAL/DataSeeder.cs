@@ -133,19 +133,19 @@ namespace ShopApi.DAL
             {
                 orders = new List<Order>()
                 {
-                    new Order(){Status = Status.Accepted, Furnitures = new FurnitureCount[]
+                    new Order(){Status = Status.Accepted, Furnitures = new List<FurnitureCount>()
                     {
                         furnitureCounts[0],furnitureCounts[1], furnitureCounts[2],furnitureCounts[3]
                     }, DateOfAdmission = DateTime.Now, DateOfRealization = DateTime.Now.AddDays(2), TotalPrize = 4000, TotalWeight = 1000},
-                    new Order(){Status = Status.Rejected,Furnitures = new FurnitureCount[]
+                    new Order(){Status = Status.Rejected,Furnitures = new List<FurnitureCount>()
                     {
                         furnitureCounts[4],furnitureCounts[5], furnitureCounts[6],furnitureCounts[7]
                     }, DateOfAdmission = DateTime.Now, DateOfRealization = DateTime.Now.AddDays(2), TotalPrize = 4000, TotalWeight = 1000},
-                    new Order(){Status = Status.InRealization, Furnitures = new FurnitureCount[]
+                    new Order(){Status = Status.InRealization, Furnitures = new List<FurnitureCount>()
                     {
                         furnitureCounts[8]
                     }, DateOfAdmission = DateTime.Now, DateOfRealization = DateTime.Now.AddDays(2), TotalPrize = 1000, TotalWeight = 20},
-                    new Order(){Status = Status.Delivered,Furnitures = new FurnitureCount[]
+                    new Order(){Status = Status.Delivered,Furnitures = new List<FurnitureCount>()
                     {
                         furnitureCounts[9],furnitureCounts[10],furnitureCounts[11],furnitureCounts[12]
                     }, DateOfAdmission = DateTime.Now, DateOfRealization = DateTime.Now.AddDays(2), TotalPrize = 4000, TotalWeight = 1000},
@@ -177,8 +177,8 @@ namespace ShopApi.DAL
             {
                 customers = new List<Customer>()
                 {
-                    new Customer(){Name = "Customer 1", Address = addresses[0], Orders = new Order[]{orders[0], orders[1]}},
-                    new Customer(){Name = "Customer 2", Address = addresses[1], Orders = new Order[]{orders[2], orders[3]}},
+                    new Customer(){Name = "Customer 1", Address = addresses[0], Orders = new List<Order>(){orders[0], orders[1]}},
+                    new Customer(){Name = "Customer 2", Address = addresses[1], Orders = new List<Order>(){orders[2], orders[3]}},
                 };
                 await context.CustomerItems.AddRangeAsync(customers);
                 await context.SaveChangesAsync();

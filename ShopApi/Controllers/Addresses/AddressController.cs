@@ -73,19 +73,20 @@ namespace ShopApi.Controllers.Addresses
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] int id)
         {
-            if (await _repository.RemoveAsync(id))
+            try
             {
-                try
+                if (await _repository.RemoveAsync(id))
                 {
+
                     await _repository.SaveChangesAsync();
                     return NoContent();
                 }
-                catch (DbUpdateException)
-                {
-                    return Conflict("Cannot remove Address used by other entities. First remove Binding." +
-                                    " If you want to find who use this address check url /api/person/search witch Address id = "+id);
-                }
             }
+            catch (InvalidOperationException e)
+            {
+                return Conflict(e.Message);
+            }
+
             return NotFound("Not Found Address with given Id");
         }
 

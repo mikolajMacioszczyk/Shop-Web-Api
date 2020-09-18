@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,7 @@ namespace ShopApi.Controllers.Collection
                 collectionReadDto.Id = id;
                 return Accepted(nameof(GetByIdAsync), collectionReadDto);
             }
-            return BadRequest();
+            return BadRequest("Invalid id");
         }
 
         [HttpPost("create")]
@@ -70,11 +71,19 @@ namespace ShopApi.Controllers.Collection
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] int id)
         {
-            if (await _repository.RemoveAsync(id))
+            try
             {
-                await _repository.SaveChangesAsync();
-                return NoContent();
+                if (await _repository.RemoveAsync(id))
+                {
+                    await _repository.SaveChangesAsync();
+                    return NoContent();
+                }
             }
+            catch (InvalidOperationException e)
+            {
+                return Conflict(e.Message);
+            }
+
             return NotFound("Not Found Collection with given Id");
         }
         

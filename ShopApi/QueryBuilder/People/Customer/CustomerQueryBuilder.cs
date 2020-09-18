@@ -8,10 +8,10 @@ namespace ShopApi.QueryBuilder.People.Customer
 {
     public class CustomerQueryBuilder : ICustomerQueryBuilder
     {
-        private readonly CustomerRepository _repository;
+        private readonly ICustomerRepository _repository;
         private IQueryable<Models.People.Customer> _query;
 
-        public CustomerQueryBuilder(CustomerRepository repository)
+        public CustomerQueryBuilder(ICustomerRepository repository)
         {
             _repository = repository;
         }

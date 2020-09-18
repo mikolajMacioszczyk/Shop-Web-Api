@@ -17,11 +17,8 @@ namespace ShopApi.Profiles.Converters.EnumerbleIdToEnumerableOrder
 
         public IEnumerable<Order> Convert(IEnumerable<int> sourceMember, ResolutionContext context)
         {
-            if (sourceMember == null)
-            {
-                return null;
-            }
             List<Order> list = new List<Order>();
+            if (sourceMember == null) { return list; }
             foreach (var id in sourceMember)
             {
                 var fromDb = _db.OrderItems.FirstOrDefault(f => f.Id == id);
