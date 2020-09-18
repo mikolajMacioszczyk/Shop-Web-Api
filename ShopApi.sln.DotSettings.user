@@ -1,0 +1,30 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=34e9fcbb_002Ddd2b_002D4111_002Dbdbb_002D801ad5555214/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from RepositoryUnitTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFolder&gt;6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4/d:RepositoryUnitTests&lt;/ProjectFolder&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.QueryBuilderUnitTests.Address.AddressQueryBuilderTests.GetAll_ShouldReturnFullList&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.QueryBuilderUnitTests.Address.AddressQueryBuilderTests.WithCityLike_NullPattern&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.QueryBuilderUnitTests.Address.AddressQueryBuilderTests&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=42c32d96_002D9a4a_002D4bfa_002Da511_002D8567da487e79/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddressQueryBuilderTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.QueryBuilderUnitTests.Address.AddressQueryBuilderTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=932f7e63_002Db3c1_002D4a98_002D9527_002D7fda39a91aa2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DeleteAsync_ValidId_BindedWithOtherEntities_ShouldNotRemove_ShouldReturnConflict" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b2dc305f_002D8a0e_002D4adf_002D8838_002D3a70e374910d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetByIdAsyncTest_ValidId_ExpectedAddressObject" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFolder&gt;6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4/d:RepositoryUnitTests&lt;/ProjectFolder&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b44bbfe3_002Db761_002D42c9_002D834d_002D7edc2fec7198/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAsync_ValidCreateDto_ShouldCreateDto" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.Controllers.OrderControllerUnitTests.CreateAsync_ValidCreateDto_ShouldCreateDto&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c24c87c9_002D0133_002D4fcb_002Da99b_002Dd6670d1a0c1a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAll_ShouldReturnFullList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
