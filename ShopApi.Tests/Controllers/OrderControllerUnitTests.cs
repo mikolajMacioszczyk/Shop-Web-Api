@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using ShopApi.Controllers.Orders;
 using ShopApi.DAL.Repositories.Orders;
-using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner;
 using ShopApi.Models.Dtos.Orders.FurnitureCountDtos;
 using ShopApi.Models.Dtos.Orders.OrderDtos;
 using ShopApi.Models.Orders;
-using ShopApi.QueryBuilder.Furniture.Corner;
 using ShopApi.QueryBuilder.Order;
 
 namespace ShopApi.Tests.Controllers
@@ -77,7 +75,7 @@ namespace ShopApi.Tests.Controllers
             var copy = new OrderUpdateDto()
             {
                 Status = order.Status.ToString(),
-                Furnitures = order.Furnitures.Select(f => new FurnitureCountCreateDto(){Count = f.Count, FurnitureId = f.FurnitureId}),
+                Furnitures = order.Furnitures.Select(f => new FurnitureCountUpdateDto(){Count = f.Count, FurnitureId = f.FurnitureId}),
                 TotalPrize = order.TotalPrize,
                 TotalWeight = order.TotalWeight,
                 DateOfAdmission = order.DateOfAdmission,
@@ -91,7 +89,7 @@ namespace ShopApi.Tests.Controllers
                 DateOfAdmission = DateTime.Now,
                 DateOfRealization = DateTime.Now,
                 Furnitures = ShopTestDatabaseInitializer.FurnitureCounts.Take(3)
-                    .Select(fc => new FurnitureCountCreateDto(){Count = fc.Count, FurnitureId = fc.FurnitureId})
+                    .Select(fc => new FurnitureCountUpdateDto(){Count = fc.Count, FurnitureId = fc.FurnitureId})
             };
             
             // act
@@ -101,12 +99,13 @@ namespace ShopApi.Tests.Controllers
             Assert.IsInstanceOf<AcceptedResult>(result);
             var asOk = result as AcceptedResult;
             OrderReadDto asDto = asOk.Value as OrderReadDto;
-            Assert.AreEqual(update.Status, asDto.Status);
+            Assert.AreEqual(update.Status, asDto.Status.ToString());
             Assert.AreEqual(update.TotalPrize, asDto.TotalPrize);
             Assert.AreEqual(update.DateOfAdmission, asDto.DateOfAdmission);
-            Assert.True(update.Furnitures.OrderBy(f => f.FurnitureId)
-                .SequenceEqual(asDto.Furnitures.Select(f => new FurnitureCountCreateDto(){Count = f.Count, FurnitureId = f.FurnitureId})
-                    .OrderBy(f => f.FurnitureId)));
+            var x = order.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id).ToList();
+            var y = asDto.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id).ToList();
+            Assert.True(order.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id)
+                .SequenceEqual(asDto.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id)));
             
             await _controller.UpdateAsync(order.Id, copy);
         }
@@ -128,7 +127,7 @@ namespace ShopApi.Tests.Controllers
                 DateOfAdmission = DateTime.Now,
                 DateOfRealization = DateTime.Now,
                 Furnitures = ShopTestDatabaseInitializer.FurnitureCounts.Skip(2).Take(2)
-                    .Select(fc => new FurnitureCountCreateDto(){Count = fc.Count, FurnitureId = fc.FurnitureId})
+                    .Select(fc => new FurnitureCountUpdateDto(){Count = fc.Count, FurnitureId = fc.FurnitureId})
             };
             
             // act
@@ -160,12 +159,12 @@ namespace ShopApi.Tests.Controllers
             Assert.IsInstanceOf<CreatedResult>(result);
             var asCreated = result as CreatedResult;
             OrderReadDto asDto = asCreated.Value as OrderReadDto;
-            Assert.AreEqual(order.Status, asDto.Status);
+            Assert.AreEqual(order.Status, asDto.Status.ToString());
             Assert.AreEqual(order.TotalPrize, asDto.TotalPrize);
             Assert.AreEqual(order.DateOfAdmission, asDto.DateOfAdmission);
-            Assert.True(order.Furnitures.OrderBy(f => f.FurnitureId)
+            Assert.True(order.Furnitures.Select(f => f.FurnitureId).OrderBy(f => f)
                 .SequenceEqual(asDto.Furnitures.Select(f => new FurnitureCountCreateDto(){Count = f.Count, FurnitureId = f.FurnitureId})
-                    .OrderBy(f => f.FurnitureId)));
+                    .Select(f => f.FurnitureId).OrderBy(f => f)));
         }
         
         [Test]

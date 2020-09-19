@@ -209,7 +209,7 @@ namespace ShopApi.Tests.Controllers
         {
             // assert
             var id = _random.Next(Int32.MaxValue);
-            while (_context.CornerItems.Any(c => c.Id == id))
+            while (ShopTestDatabaseInitializer.Corners.Any(c => c.Id == id))
             {
                 id = _random.Next(Int32.MaxValue);
             }

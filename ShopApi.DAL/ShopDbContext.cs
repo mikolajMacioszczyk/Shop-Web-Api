@@ -11,13 +11,6 @@ namespace ShopApi.DAL
         public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
         {
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<FurnitureCount>()
-                .HasKey(fc => new {fc.FurnitureId, fc.Count});
-        }
-
         public DbSet<Collection> CollectionItems { get; set; }
         public DbSet<Furniture> FurnitureItems { get; set; }
         public DbSet<FurnitureCount> FurnitureCounts { get; set; }

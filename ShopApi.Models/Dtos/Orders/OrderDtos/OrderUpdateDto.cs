@@ -18,6 +18,6 @@ namespace ShopApi.Models.Dtos.Orders.OrderDtos
         [Required]
         public DateTime DateOfAdmission { get; set; }
         public DateTime DateOfRealization { get; set; }
-        public IEnumerable<FurnitureCountCreateDto> Furnitures { get; set; }
+        public IEnumerable<FurnitureCountUpdateDto> Furnitures { get; set; }
     }
 }

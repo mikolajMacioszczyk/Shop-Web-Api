@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.DAL.Repositories.Orders;
 using ShopApi.Models.Dtos.Orders.OrderDtos;
+using ShopApi.Models.Furnitures.FurnitureImplmentation;
 using ShopApi.Models.Orders;
 using ShopApi.QueryBuilder.Order;
 
@@ -48,6 +49,7 @@ namespace ShopApi.Controllers.Orders
         {
             Order model = _mapper.Map<Order>(orderUpdateDto);
 
+            model.Furnitures = _repository.UpdateFurnitureCount(model.Furnitures).ToList();
             if (await _repository.UpdateAsync(id,model))
             {
                 await _repository.SaveChangesAsync();
@@ -62,6 +64,8 @@ namespace ShopApi.Controllers.Orders
         public async Task<ActionResult<OrderReadDto>> CreateAsync([FromBody] OrderCreateDto orderCreateDto)
         {
             var model = _mapper.Map<Order>(orderCreateDto);
+
+            model.Furnitures = _repository.UpdateFurnitureCount(model.Furnitures).ToList();
             if (await _repository.CreateAsync(model))
             {
                 await _repository.SaveChangesAsync();
@@ -74,10 +78,17 @@ namespace ShopApi.Controllers.Orders
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAsync([FromRoute] int id)
         {
-            if (await _repository.RemoveAsync(id))
+            try
             {
-                await _repository.SaveChangesAsync();
-                return NoContent();
+                if (await _repository.RemoveAsync(id))
+                {
+                    await _repository.SaveChangesAsync();
+                    return NoContent();
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                return Conflict(e.Message);
             }
             return NotFound("Not Found Order with given Id");
         }

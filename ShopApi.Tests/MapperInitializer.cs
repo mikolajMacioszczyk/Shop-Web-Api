@@ -136,13 +136,13 @@ namespace ShopApi.Tests
                     cfg.CreateMap<EmployeeUpdateDto, Employee>()
                         .ForMember(target => target.JobTitles,
                             obt => 
-                                obt.ConvertUsing<IStringToJobTitlesConverter, string>())
+                                obt.ConvertUsing(new StringToJobTitlesConverter()))
                         .ForMember(target => target.Permission,
                             obt =>
-                                obt.ConvertUsing<IStringToPermissionConverter, string>())
+                                obt.ConvertUsing(new StringToPermissionConverter()))
                         .ForMember(target => target.Address,
                             obt =>
-                                obt.ConvertUsing<IIdToAddressConverter, int>(src =>
+                                obt.ConvertUsing(new IdToAddressConverter(context),src =>
                                     src.AddressId));
                 }
             );

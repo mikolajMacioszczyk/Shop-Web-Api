@@ -9,6 +9,11 @@
     &lt;/TestAncestor&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=39540c38_002Dcb83_002D444f_002D9bc5_002D56025f5d0725/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.Controllers.OrderControllerUnitTests.UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=42c32d96_002D9a4a_002D4bfa_002Da511_002D8567da487e79/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddressQueryBuilderTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.QueryBuilderUnitTests.Address.AddressQueryBuilderTests&lt;/TestId&gt;&#xD;
@@ -16,6 +21,11 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=932f7e63_002Db3c1_002D4a98_002D9527_002D7fda39a91aa2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DeleteAsync_ValidId_BindedWithOtherEntities_ShouldNotRemove_ShouldReturnConflict" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9c969188_002D5930_002D4cf8_002Da15f_002D540222232ef3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.Controllers.OrderControllerUnitTests.UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b2dc305f_002D8a0e_002D4adf_002D8838_002D3a70e374910d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetByIdAsyncTest_ValidId_ExpectedAddressObject" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFolder&gt;6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4/d:RepositoryUnitTests&lt;/ProjectFolder&gt;&#xD;

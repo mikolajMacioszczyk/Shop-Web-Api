@@ -135,7 +135,10 @@ namespace ShopApi.Profiles
             CreateMap<FurnitureCountUpdateDto, FurnitureCount>();
             CreateMap<OrderUpdateDto, Order>()
                 .ForMember(target => target.Status,
-                    obt => obt.ConvertUsing<IStringToStatusConverter, string>());
+                    obt => obt.ConvertUsing<IStringToStatusConverter, string>())
+                .ForMember(target => target.Furnitures,
+                    obt =>
+                        obt.MapFrom(src => src.Furnitures));
             CreateMap<AddressUpdateDto, Address>();
 
             MapSpecialFurnitureUpdate();

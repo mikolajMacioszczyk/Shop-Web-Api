@@ -36,10 +36,7 @@ namespace ShopApi.DAL.Repositories.Orders
         {
             if (created == null)
                 return false;
-            var copy = created.Furnitures;
-            created.Furnitures = created.Furnitures.Where(fc => !_db.FurnitureCounts.Contains(fc)).ToList();
             await _db.OrderItems.AddAsync(created);
-            created.Furnitures = copy;
             return true;
         }
 
@@ -48,14 +45,8 @@ namespace ShopApi.DAL.Repositories.Orders
             var fromDb = await _db.OrderItems.Include(o => o.Furnitures)
                 .FirstOrDefaultAsync(o => o.Id == id);
             if (fromDb == null || updated == null){return false;}
-
-            fromDb.Furnitures = updated.Furnitures
-                .Select(f =>
-                {
-                    var furnitureCount =  _db.FurnitureCounts.FirstOrDefault(
-                               fc => fc.Count == f.Count && fc.FurnitureId == f.FurnitureId);
-                    return furnitureCount ?? f;
-                }).ToList();
+            
+            fromDb.Furnitures = updated.Furnitures;
             fromDb.Status = updated.Status;
             fromDb.TotalPrize = updated.TotalPrize;
             fromDb.TotalWeight = updated.TotalWeight;
@@ -63,6 +54,22 @@ namespace ShopApi.DAL.Repositories.Orders
             fromDb.DateOfRealization = updated.DateOfRealization;
 
             return true;
+        }
+        
+        public IEnumerable<FurnitureCount> UpdateFurnitureCount(IEnumerable<FurnitureCount> updated)
+        {
+            if (updated == null){return new List<FurnitureCount>();}
+            return updated.Select(TryCreateFurnitureCountOrGetFromDb);
+        }
+
+        private FurnitureCount TryCreateFurnitureCountOrGetFromDb(FurnitureCount created)
+        {
+            var fromDb = _db.FurnitureCounts.FirstOrDefault(f =>
+                f.Count == created.Count && f.FurnitureId == created.FurnitureId);
+            if (fromDb != null)
+                return fromDb;
+            _db.FurnitureCounts.Add(created);
+            return created;
         }
 
         public async Task<bool> RemoveAsync(int id)
