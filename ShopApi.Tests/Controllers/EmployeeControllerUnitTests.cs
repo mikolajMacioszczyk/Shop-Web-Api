@@ -16,7 +16,7 @@ namespace ShopApi.Tests.Controllers
     public class EmployeeControllerUnitTests : ShopApiTestBase
     {
         private IEmployeeRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private IEmployeeQueryBuilder _queryBuilder;
         private EmployeeController _controller;
         private readonly Random _random = new Random();
@@ -25,21 +25,25 @@ namespace ShopApi.Tests.Controllers
         {
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new EmployeeRepository(_context);
-
-            _mapper = MapperInitializer.GetMapper(_context);
+            
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Profiles.PeopleProfile(_context));
+                cfg.AddProfile(new Profiles.AddressProfile());
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new EmployeeController(_repository, _mapper, _queryBuilder);
+            _controller = new EmployeeController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Employees.First().Id;
-            var expectedEmployee = _mapper.Map<EmployeeReadDto>(ShopTestDatabaseInitializer.Employees.First(e => e.Id == id));
+            var expectedEmployee = _mockMapper.Map<EmployeeReadDto>(ShopTestDatabaseInitializer.Employees.First(e => e.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

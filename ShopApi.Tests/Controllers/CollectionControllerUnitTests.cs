@@ -15,7 +15,7 @@ namespace ShopApi.Tests.Controllers
     public class CollectionControllerUnitTests : ShopApiTestBase
     {
         private ICollectionRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private ICollectionQueryBuilder _queryBuilder;
         private CollectionController _controller;
         private readonly Random _random = new Random();
@@ -25,20 +25,23 @@ namespace ShopApi.Tests.Controllers
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new CollectionRepository(_context);
 
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Profiles.CollectionProfile());
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new CollectionController(_repository, _mapper, _queryBuilder);
+            _controller = new CollectionController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Collections.First().Id;
-            var expectedCollection = _mapper.Map<CollectionReadDto>(ShopTestDatabaseInitializer.Collections.First(c => c.Id == id));
+            var expectedCollection = _mockMapper.Map<CollectionReadDto>(ShopTestDatabaseInitializer.Collections.First(c => c.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

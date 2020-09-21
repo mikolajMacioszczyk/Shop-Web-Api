@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,6 +8,7 @@ using ShopApi.Controllers.Addresses;
 using ShopApi.DAL.Repositories.Address;
 using ShopApi.Models.Dtos.Address;
 using ShopApi.QueryBuilder.Address;
+using ShopApi.Tests.Profiles;
 
 namespace ShopApi.Tests.Controllers
 {
@@ -16,30 +16,32 @@ namespace ShopApi.Tests.Controllers
     public class AddressControllerUnitTests : ShopApiTestBase
     {
         private IAddressRepository _repository;
-        private IMapper _mapper;
         private IAddressQueryBuilder _queryBuilder;
         private AddressController _controller;
         private readonly Random _random = new Random();
+        private readonly IMapper _mockMapper;
 
         public AddressControllerUnitTests()
         {
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new AddressRepository(_context);
-
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AddressProfile());
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new AddressController(_repository, _mapper, _queryBuilder);
+            _controller = new AddressController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Addresses.First().Id;
-            var expectedAddress = _mapper.Map<AddressReadDto>(ShopTestDatabaseInitializer.Addresses.First(a => a.Id == id));
+            var expectedAddress = _mockMapper.Map<AddressReadDto>(ShopTestDatabaseInitializer.Addresses.First(a => a.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

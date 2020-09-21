@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using ShopApi.Controllers.Furniture;
 using ShopApi.DAL.Repositories.Furniture.Chair;
-using ShopApi.Models.Dtos.Collection;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Chair;
 using ShopApi.QueryBuilder.Furniture.Chair;
+using ShopApi.Tests.Profiles;
 
 namespace ShopApi.Tests.Controllers
 {
     [TestFixture]
     public class ChairControllerUnitTests : ShopApiTestBase
     {
-        private IChairRepository _repository;
-        private IMapper _mapper;
-        private IChairQueryBuilder _queryBuilder;
+        private readonly IChairRepository _repository;
+        private readonly IMapper _mockMapper;
+        private readonly IChairQueryBuilder _queryBuilder;
         private ChairController _controller;
         private readonly Random _random = new Random();
 
@@ -25,21 +25,24 @@ namespace ShopApi.Tests.Controllers
         {
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new ChairRepository(_context);
-
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new FurnitureProfile(_context));
+                cfg.AddProfile(new CollectionProfile());
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new ChairController(_repository, _mapper, _queryBuilder);
+            _controller = new ChairController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Chairs.First().Id;
-            var expectedChair = _mapper.Map<ChairReadDto>(ShopTestDatabaseInitializer.Chairs.First(c => c.Id == id));
+            var expectedChair = _mockMapper.Map<ChairReadDto>(ShopTestDatabaseInitializer.Chairs.First(c => c.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

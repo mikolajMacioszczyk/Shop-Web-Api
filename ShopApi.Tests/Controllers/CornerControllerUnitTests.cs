@@ -15,7 +15,7 @@ namespace ShopApi.Tests.Controllers
     public class CornerControllerUnitTests : ShopApiTestBase
     {
         private ICornerRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private ICornerQueryBuilder _queryBuilder;
         private CornerController _controller;
         private readonly Random _random = new Random();
@@ -24,21 +24,25 @@ namespace ShopApi.Tests.Controllers
         {
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new CornerRepository(_context);
-
-            _mapper = MapperInitializer.GetMapper(_context);
+            
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Profiles.CollectionProfile());
+                cfg.AddProfile(new Profiles.FurnitureProfile(_context));
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new CornerController(_repository, _mapper, _queryBuilder);
+            _controller = new CornerController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Corners.First().Id;
-            var expectedCorner = _mapper.Map<CornerReadDto>(ShopTestDatabaseInitializer.Corners.First(c => c.Id == id));
+            var expectedCorner = _mockMapper.Map<CornerReadDto>(ShopTestDatabaseInitializer.Corners.First(c => c.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

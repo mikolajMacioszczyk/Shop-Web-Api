@@ -17,7 +17,7 @@ namespace ShopApi.Tests.Controllers
     public class OrderControllerUnitTests : ShopApiTestBase
     {
         private IOrderRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private IOrderQueryBuilder _queryBuilder;
         private OrderController _controller;
         private readonly Random _random = new Random();
@@ -27,20 +27,24 @@ namespace ShopApi.Tests.Controllers
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new OrderRepository(_context);
 
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(new Profiles.OrderProfile());
+                    cfg.AddProfile(new Profiles.FurnitureProfile(_context));
+                }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new OrderController(_repository, _mapper, _queryBuilder);
+            _controller = new OrderController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Orders.First().Id;
-            var expectedOrder = _mapper.Map<OrderReadDto>(ShopTestDatabaseInitializer.Orders.First(o => o.Id == id));
+            var expectedOrder = _mockMapper.Map<OrderReadDto>(ShopTestDatabaseInitializer.Orders.First(o => o.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

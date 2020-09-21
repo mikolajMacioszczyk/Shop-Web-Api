@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using ShopApi.Controllers.Furniture;
 using ShopApi.DAL.Repositories.Furniture.Table;
-using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Corner;
 using ShopApi.Models.Dtos.Furniture.FurnitureImplementations.Table;
 using ShopApi.QueryBuilder.Furniture.Table;
+using ShopApi.Tests.Profiles;
 
 namespace ShopApi.Tests.Controllers
 {
@@ -16,7 +16,7 @@ namespace ShopApi.Tests.Controllers
     public class TableControllerUnitTests : ShopApiTestBase
     {
         private ITableRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private ITableQueryBuilder _queryBuilder;
         private TableController _controller;
         private readonly Random _random = new Random();
@@ -26,20 +26,24 @@ namespace ShopApi.Tests.Controllers
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new TableRepository(_context);
 
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new CollectionProfile());
+                cfg.AddProfile(new FurnitureProfile(_context));
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new TableController(_repository, _mapper, _queryBuilder);
+            _controller = new TableController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Tables.First().Id;
-            var expectedTable = _mapper.Map<TableReadDto>(ShopTestDatabaseInitializer.Tables.First(t => t.Id == id));
+            var expectedTable = _mockMapper.Map<TableReadDto>(ShopTestDatabaseInitializer.Tables.First(t => t.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

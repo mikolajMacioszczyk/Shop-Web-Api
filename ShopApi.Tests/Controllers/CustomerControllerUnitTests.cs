@@ -15,7 +15,7 @@ namespace ShopApi.Tests.Controllers
     public class CustomerControllerUnitTests : ShopApiTestBase
     {
         private ICustomerRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private ICustomerQueryBuilder _queryBuilder;
         private CustomerController _controller;
         private readonly Random _random = new Random();
@@ -25,20 +25,25 @@ namespace ShopApi.Tests.Controllers
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new CustomerRepository(_context);
 
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Profiles.AddressProfile());
+                cfg.AddProfile(new Profiles.OrderProfile());
+                cfg.AddProfile(new Profiles.PeopleProfile(_context));
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new CustomerController(_repository, _mapper, _queryBuilder);
+            _controller = new CustomerController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Customers.First().Id;
-            var expectedCustomer = _mapper.Map<CustomerReadDto>(ShopTestDatabaseInitializer.Customers.First(c => c.Id == id));
+            var expectedCustomer = _mockMapper.Map<CustomerReadDto>(ShopTestDatabaseInitializer.Customers.First(c => c.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);

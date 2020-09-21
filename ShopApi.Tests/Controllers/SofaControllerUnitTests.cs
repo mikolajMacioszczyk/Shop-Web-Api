@@ -15,7 +15,7 @@ namespace ShopApi.Tests.Controllers
     public class SofaControllerUnitTests : ShopApiTestBase
     {
         private ISofaRepository _repository;
-        private IMapper _mapper;
+        private IMapper _mockMapper;
         private ISofaQueryBuilder _queryBuilder;
         private SofaController _controller;
         private readonly Random _random = new Random();
@@ -25,20 +25,24 @@ namespace ShopApi.Tests.Controllers
             ShopTestDatabaseInitializer.Initialize(_context);
             _repository = new SofaRepository(_context);
 
-            _mapper = MapperInitializer.GetMapper(_context);
+            _mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Profiles.CollectionProfile());
+                cfg.AddProfile(new Profiles.FurnitureProfile(_context));
+            }).CreateMapper();
         }
         
         [SetUp]
         public void SetUp()
         {
-            _controller = new SofaController(_repository, _mapper, _queryBuilder);
+            _controller = new SofaController(_repository, _mockMapper, _queryBuilder);
         }
         
         [Test]
         public async Task GetByIdAsync_ValidID_ShouldReturnAddress()
         {
             var id = ShopTestDatabaseInitializer.Sofas.First().Id;
-            var expectedSofa = _mapper.Map<SofaReadDto>(ShopTestDatabaseInitializer.Sofas.First(s => s.Id == id));
+            var expectedSofa = _mockMapper.Map<SofaReadDto>(ShopTestDatabaseInitializer.Sofas.First(s => s.Id == id));
             var result = (await _controller.GetByIdAsync(id)).Result;
             
             Assert.IsInstanceOf<OkObjectResult>(result);
