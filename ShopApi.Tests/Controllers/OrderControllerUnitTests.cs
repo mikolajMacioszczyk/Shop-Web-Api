@@ -102,8 +102,6 @@ namespace ShopApi.Tests.Controllers
             Assert.AreEqual(update.Status, asDto.Status.ToString());
             Assert.AreEqual(update.TotalPrize, asDto.TotalPrize);
             Assert.AreEqual(update.DateOfAdmission, asDto.DateOfAdmission);
-            var x = order.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id).ToList();
-            var y = asDto.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id).ToList();
             Assert.True(order.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id)
                 .SequenceEqual(asDto.Furnitures.OrderBy(f => f.FurnitureId).Select(f => f.Id)));
             

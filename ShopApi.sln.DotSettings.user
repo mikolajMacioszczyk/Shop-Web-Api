@@ -10,9 +10,7 @@
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=39540c38_002Dcb83_002D444f_002D9bc5_002D56025f5d0725/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.Controllers.OrderControllerUnitTests.UpdateAsync_ValidId_ValidUpdateDto_ShouldUpdateDto&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=42c32d96_002D9a4a_002D4bfa_002Da511_002D8567da487e79/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddressQueryBuilderTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
@@ -34,6 +32,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::6EB217FB-02C9-42AE-A13D-3FD5E1DF59C4::.NETCoreApp,Version=v3.1::ShopApi.Tests.Controllers.OrderControllerUnitTests.CreateAsync_ValidCreateDto_ShouldCreateDto&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b9b47dd9_002D38d7_002D4cb6_002D9b2d_002D49387e2f43c2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;ShopApi.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c24c87c9_002D0133_002D4fcb_002Da99b_002Dd6670d1a0c1a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAll_ShouldReturnFullList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\C#\ShopApi\ShopApi.Tests" Presentation="&amp;lt;ShopApi.Tests&amp;gt;" /&gt;&#xD;

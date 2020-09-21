@@ -26,11 +26,9 @@ namespace ShopApi
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddAutoMapper(typeof(Startup));
-
             services.AddFurnitureConfig().AddOrderConfig().AddPeopleConfig()
                 .AddCollectionConfig().AddCollectionConfig().AddAddressesConfig()
-                .AddConvertersConfig().AddQueryBuilderConfig();
+                .AddConvertersConfig().AddQueryBuilderConfig().AddMapperConfig();
 
             
             services.AddControllers();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using ShopApi.DAL.Repositories.Address;
 using ShopApi.DAL.Repositories.Collection;
 using ShopApi.DAL.Repositories.Furniture.Base;
@@ -10,6 +11,7 @@ using ShopApi.DAL.Repositories.Orders;
 using ShopApi.DAL.Repositories.People.Base;
 using ShopApi.DAL.Repositories.People.Customer;
 using ShopApi.DAL.Repositories.People.Emplyee;
+using ShopApi.Profiles;
 using ShopApi.Profiles.Converters.EnumerbleIdToEnumerableOrder;
 using ShopApi.Profiles.Converters.IdToAddress;
 using ShopApi.Profiles.Converters.IdToCollection;
@@ -36,6 +38,23 @@ namespace ShopApi.Extensions
 {
     public static class ConfigExtension
     {
+        public static IServiceCollection AddMapperConfig(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AddressProfile());
+                mc.AddProfile(new CollectionProfile());
+                mc.AddProfile(new FurnitureProfile());
+                mc.AddProfile(new OrderProfile());
+                mc.AddProfile(new PeopleProfile());
+            });
+
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            return services;
+        }
+        
         public static IServiceCollection AddQueryBuilderConfig(this IServiceCollection services)
         {
             return services.AddScoped<IPeopleQueryBuilder, PeopleQueryBuilder>()
